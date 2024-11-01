@@ -6,11 +6,13 @@ import Link from "next/link";
 
 const PAGE_SIZE_TO_SHOW = 2
 
-export default async function CategoryPage({ params, searchParams }:
-  { params: Promise<{ slug: string }>, searchParams: { [key: string]: string | string[] | undefined } }
+export default async function CategoryPage(
+  { params, searchParams }:
+    { params: { slug: string }, searchParams: { [key: string]: string | string[] | undefined } }
 ) {
-  const { slug } = await params
-  const { data, meta } = await getProducts({ category: slug, page: 1, pageSize: PAGE_SIZE_TO_SHOW });
+  const { slug } = params
+  const { page } = searchParams
+  const { data, meta: { pagination } } = await getProducts({ category: slug, page, pageSize: PAGE_SIZE_TO_SHOW });
 
   if (data.length === 0) return (
     <Section className="flex flex-col gap-4">
@@ -54,7 +56,7 @@ export default async function CategoryPage({ params, searchParams }:
         )
         )}
       </div>
-      {/* <Pagination page={page} pageSize={PAGE_SIZE_TO_SHOW} pageCount={1} total={meta.pagination.total} /> */}
+      <Pagination page={pagination.page} pageSize={pagination.pageSize} pageCount={pagination.pageCount} total={pagination.total} />
     </Section>
   )
 };
