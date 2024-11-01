@@ -1,0 +1,9 @@
+
+# GET http://localhost:1337/api/home?populate=cover
+# Authorization: Bearer # APIKEY
+
+# GET http://localhost:1337/api/product-categories?fields[0]=name&fields[1]=slug&fields[2]=description&populate[image][fields][0]=url
+# Authorization: Bearer # APIKEY
+
+GET http://localhost:1337/api/products?filters[product_category][slug][$contains]=shirts&populate=images&pagination[page]=4
+Authorization: Bearer # APIKEY
